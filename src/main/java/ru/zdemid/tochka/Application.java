@@ -42,10 +42,10 @@ public class Application {
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
         scheduledExecutorService.scheduleAtFixedRate(producer::publishMessage, 0, 1, TimeUnit.SECONDS);
         scheduledExecutorService.scheduleAtFixedRate(consumer::consume, 0, 1, TimeUnit.SECONDS);
-        progressBar(produceCount, consumeCount);
+        progressBar(bus, produceCount, consumeCount);
     }
 
-    private static void progressBar(AtomicInteger produceCount, AtomicInteger consumeCount) {
+    private static void progressBar(Bus<Message> bus, AtomicInteger produceCount, AtomicInteger consumeCount) {
         try {
             long start = Instant.now().toEpochMilli();
             while (!Thread.currentThread().isInterrupted()) {
@@ -53,11 +53,12 @@ public class Application {
                 int consumerCountValue = consumeCount.get();
                 int producerCountValue = produceCount.get();
                 long milliDistance = Instant.now().toEpochMilli() - start;
-                String progress = String.format("Producer %.2f/sec, %5d Consumer %.2f/sec, %5d",
+                String progress = String.format("Producer %.2f/sec, count = %d; Consumer %.2f/sec, count = %d; Queue size = %d       ",
                         producerCountValue * 1000. / milliDistance,
                         producerCountValue,
                         consumerCountValue * 1000. / milliDistance,
-                        consumerCountValue);
+                        consumerCountValue,
+                        bus.size());
                 System.out.print(progress);
                 System.out.print("\r");
             }

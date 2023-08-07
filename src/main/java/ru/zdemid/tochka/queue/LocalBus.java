@@ -16,4 +16,8 @@ public class LocalBus<T> implements Bus<T> {
     public T consume() {
         return queue.poll();
     }
+
+    public int size() {
+        return queue.size();
+    }
 }

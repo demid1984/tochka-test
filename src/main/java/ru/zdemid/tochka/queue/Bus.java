@@ -6,4 +6,5 @@ public interface Bus<T> {
 
     T consume();
 
+    int size();
 }

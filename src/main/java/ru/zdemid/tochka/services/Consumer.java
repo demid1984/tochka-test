@@ -1,7 +1,6 @@
 package ru.zdemid.tochka.services;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import ru.zdemid.tochka.model.Message;
 import ru.zdemid.tochka.queue.Bus;
 
@@ -13,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-@Slf4j
 @RequiredArgsConstructor
 public class Consumer {
 
@@ -25,7 +23,6 @@ public class Consumer {
     public void consume() {
         Callable<Integer> task = () -> {
             Message message = bus.consume();
-            //log.info("Consume the message: {}", message);
             count.incrementAndGet();
             return 0;
         };

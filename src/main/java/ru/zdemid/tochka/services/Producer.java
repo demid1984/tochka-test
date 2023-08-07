@@ -1,7 +1,6 @@
 package ru.zdemid.tochka.services;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import ru.zdemid.tochka.model.Message;
 import ru.zdemid.tochka.queue.Bus;
 
@@ -14,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-@Slf4j
 @RequiredArgsConstructor
 public class Producer {
 
@@ -27,7 +25,6 @@ public class Producer {
         Callable<Integer> task = () -> {
             Message message = new Message().setUuid(UUID.randomUUID().toString());
             bus.publish(message);
-            //log.info("Produce message: {}", message);
             count.incrementAndGet();
             return 0;
         };
